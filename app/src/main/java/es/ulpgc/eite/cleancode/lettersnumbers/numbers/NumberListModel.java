@@ -27,7 +27,7 @@ public class NumberListModel implements NumberListContract.Model {
   public void onAddNumber() {
     NumberData data1 = new NumberData();
     data1.number= number++;
-    this.data.numbers.add(data1);
+    data.numbers.add(data1);
   }
 
 
