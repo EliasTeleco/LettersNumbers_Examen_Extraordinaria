@@ -35,6 +35,8 @@ public interface LetterListContract {
   interface Model {
 
     Integer getStoredNumber();
+    Integer getStoredIndex();
+
     void onDataFromNextScreen(LetterData data, Integer number);
 
     void onRestartScreen(
@@ -43,7 +45,7 @@ public interface LetterListContract {
 
     List<LetterData> getStoredDatasource();
     void onAddLetter();
-    Integer getStoredIndex();
+
   }
 
 

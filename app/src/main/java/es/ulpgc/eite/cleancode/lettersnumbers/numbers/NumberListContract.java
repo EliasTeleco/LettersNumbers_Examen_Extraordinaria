@@ -35,6 +35,7 @@ public interface NumberListContract {
     void onDataFromPreviousScreen(LetterData data,Integer number);
 
     void onAddNumber();
+
   }
 
 }

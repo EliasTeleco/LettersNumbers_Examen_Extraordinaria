@@ -5,6 +5,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 
 import es.ulpgc.eite.cleancode.lettersnumbers.app.AppMediator;
+import es.ulpgc.eite.cleancode.lettersnumbers.app.LettersToNumbersState;
 import es.ulpgc.eite.cleancode.lettersnumbers.data.NumberData;
 
 public class NumberListPresenter implements NumberListContract.Presenter {
@@ -27,13 +28,32 @@ public class NumberListPresenter implements NumberListContract.Presenter {
     Log.e(TAG, "onStart()");
 
     // TODO: add code if is necessary
+    if (state == null) {
+      state = new NumberListState();
+    }
+
+    // use passed state if is necessary
+    LettersToNumbersState savedState = getStateFromPreviousScreen();
+    if (savedState != null) {
+
+      // update the model if is necessary
+      model.onDataFromPreviousScreen(savedState.data, savedState.number);
+
+      state.data = savedState.data;
+      state.number = savedState.number;
+
+    }
   }
+
+
 
   @Override
   public void onRestart() {
     Log.e(TAG, "onRestart()");
 
     // TODO: add code if is necessary
+    model.onRestartScreen(state.data, state.number);
+
   }
 
   @Override
@@ -41,6 +61,8 @@ public class NumberListPresenter implements NumberListContract.Presenter {
     Log.e(TAG, "onResume()");
 
     // TODO: add code if is necessary
+    //view.get().onDataUpdated(state);
+
 
   }
 
@@ -49,6 +71,7 @@ public class NumberListPresenter implements NumberListContract.Presenter {
     Log.e(TAG, "onBackPressed()");
 
     // TODO: add code if is necessary
+    model.onDataFromPreviousScreen(state.data, state.number);
   }
 
   @Override
@@ -71,6 +94,11 @@ public class NumberListPresenter implements NumberListContract.Presenter {
     Log.e(TAG, "onClickNumberListButton()");
 
     // TODO: add code if is necessary
+    model.onAddNumber();
+    Log.e(TAG, "model.onAddNumber()");
+    //view.get().onDataUpdated(state);
+
+
   }
 
   @Override
@@ -78,6 +106,8 @@ public class NumberListPresenter implements NumberListContract.Presenter {
     Log.e(TAG, "onClickNumberListCell()");
 
     // TODO: add code if is necessary
+
+
   }
 
 
@@ -90,5 +120,13 @@ public class NumberListPresenter implements NumberListContract.Presenter {
   public void injectModel(NumberListContract.Model model) {
     this.model = model;
   }
+
+
+
+  private LettersToNumbersState getStateFromPreviousScreen() {
+     return  mediator.getPreviousNumberListScreenState();
+  }
+
+
 
 }
